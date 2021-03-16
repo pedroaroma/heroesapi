@@ -34,7 +34,7 @@ public class HeroesController {
     //ENCONTRAR HEROI POR ID
     @GetMapping(HEROES_ENDPOINT_LOCAL + "/{id}")
     public Mono<ResponseEntity<Heroes>> findByIdHero(@PathVariable String id) {
-        log.info("Requesting the hero with ID {}", id);
+        log.info("Requesting the hero with id {}", id);
         return heroesService.findByIdHero(id)
                 .map((item) -> new ResponseEntity<>(item, HttpStatus.OK))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -52,20 +52,13 @@ public class HeroesController {
 
     ///DELETE POR ID
     @DeleteMapping(HEROES_ENDPOINT_LOCAL + "/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
-    public Mono<HttpStatus> deleteById(@PathVariable String id) {
+    public Mono<ResponseEntity<Void>> deletebyIDHero(@PathVariable String id) {
         log.info("Delete a hero with id {}", id);
-
         try {
             heroesService.deleteByIdHero(id);
-            return Mono.just(HttpStatus.OK);
+            return Mono.just(new ResponseEntity<Void>(HttpStatus.OK));
         } catch (Exception e) {
-            return Mono.just(HttpStatus.NOT_FOUND);
+            return Mono.just(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
         }
-
     }
-
-
-
-
 }
