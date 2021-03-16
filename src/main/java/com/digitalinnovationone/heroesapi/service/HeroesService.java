@@ -28,7 +28,7 @@ public class HeroesService {
     }
 
     public Mono<Boolean> deleteByIdHero(String id) {
-        this.heroesRepository.deleteById(id);
+        heroesRepository.deleteById(id);
         return Mono.just(true);
     }
 

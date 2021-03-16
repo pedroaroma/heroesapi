@@ -24,6 +24,7 @@ import static com.digitalinnovationone.heroesapi.constants.HeroesConstant.ENDPOI
 import java.util.Arrays;
 
 
+
 public class HeroesTable {
     public static void main(String[] args) throws Exception {
 

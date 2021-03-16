@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 import static com.digitalinnovationone.heroesapi.constants.HeroesConstant.HEROES_ENDPOINT_LOCAL;
 
 @RestController
-@Slf4j
+
 public class HeroesController {
     HeroesService heroesService;
     HeroesRepository heroesRepository;
@@ -31,6 +31,7 @@ public class HeroesController {
         return heroesService.findAll();
     }
 
+    //ENCONTRAR HEROI POR ID
     @GetMapping(HEROES_ENDPOINT_LOCAL + "/{id}")
     public Mono<ResponseEntity<Heroes>> findByIdHero(@PathVariable String id) {
         log.info("Requesting the hero with ID {}", id);
@@ -41,6 +42,7 @@ public class HeroesController {
 
     //criar endpoint de atualização de hero
 
+    //criar HEROI
     @PostMapping(HEROES_ENDPOINT_LOCAL)
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<Heroes> createHero(@RequestBody Heroes heroes) {
@@ -48,13 +50,22 @@ public class HeroesController {
         return heroesService.save(heroes);
     }
 
+    ///DELETE POR ID
     @DeleteMapping(HEROES_ENDPOINT_LOCAL + "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public Mono<HttpStatus> deleteById(@PathVariable String id) {
-        heroesService.deleteByIdHero(id);
         log.info("Delete a hero with id {}", id);
-        return Mono.just(HttpStatus.OK);
+
+        try {
+            heroesService.deleteByIdHero(id);
+            return Mono.just(HttpStatus.OK);
+        } catch (Exception e) {
+            return Mono.just(HttpStatus.NOT_FOUND);
+        }
+
     }
+
+
 
 
 }
