@@ -18,14 +18,11 @@ import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 
-import java.util.Arrays;
-
-
-@Configuration
-@EnableDynamoDBRepositories
-public class HeroesTable {
-    public static void main(String[] args) throws Exception {
+public class HeroesData {
+    public static void main(String[] args) throws Exception{
 
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration())
@@ -33,19 +30,16 @@ public class HeroesTable {
 
         DynamoDB dynamoDB = new DynamoDB(client);
 
-        String tableName = "Heroes_Table";
+        Table table  = dynamoDB.getTable("Heroes_Table");
 
-        try{
+        Item hero = new Item()
+                .withPrimaryKey("id", 1)
+                .withString("nome", "Mulher Maravilha")
+                .withString("universo", "dc comics")
+                .withNumber("films", 3);
 
-            Table table = dynamoDB.createTable(tableName,
-                    Arrays.asList(new KeySchemaElement("id", KeyType.HASH)),
-                    Arrays.asList(new AttributeDefinition("id", ScalarAttributeType.S)),
-                    new ProvisionedThroughput(5l, 5L));
+        PutItemOutcome outcome = table.putItem(hero);
 
-            table.waitForActive();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
+
 }
