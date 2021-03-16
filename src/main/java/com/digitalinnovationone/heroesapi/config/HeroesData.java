@@ -35,12 +35,30 @@ public class HeroesData {
         Table table  = dynamoDB.getTable("Heroes_Table");
 
         Item hero = new Item()
-                .withPrimaryKey("id", 1)
-                .withString("nome", "Mulher Maravilha")
-                .withString("universo", "dc comics")
+                .withPrimaryKey("id", "1")
+                .withString("nome", "mulher maravilha")
+                .withString("universo", "dc Comics")
                 .withNumber("films", 3);
 
+        Item hero2 = new Item()
+                .withPrimaryKey("id", "2")
+                .withString("nome", "viuva negra")
+                .withString("universo", "marvel")
+                .withNumber("films", 2);
+
+        Item hero3 = new Item()
+                .withPrimaryKey("id", "3")
+                .withString("nome", "batman")
+                .withString("universo", "dc Comics")
+                .withNumber("films", 5);
+
+
+
         PutItemOutcome outcome = table.putItem(hero);
+        PutItemOutcome outcome2 = table.putItem(hero2);
+        PutItemOutcome outcome3 = table.putItem(hero3);
+
+
 
     }
 

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+
 @NoArgsConstructor
 @DynamoDBTable(tableName = "Heroes_Table")
 
@@ -17,10 +18,10 @@ public class Heroes {
     @DynamoDBHashKey(attributeName = "id")
     private String id;
 
-    @DynamoDBAttribute(attributeName = "name")
+    @DynamoDBAttribute(attributeName = "nome")
     private String name;
 
-    @DynamoDBAttribute(attributeName = "universe")
+    @DynamoDBAttribute(attributeName = "universo")
     private String universe;
 
     @DynamoDBAttribute(attributeName = "films")
